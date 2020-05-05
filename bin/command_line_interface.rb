@@ -26,7 +26,7 @@ class ReviewBeer
   def create_review(user, beer)
     puts "What did you think of #{beer.name}? Please add a description:"
     description = gets.chomp
-    puts "How you rate your drink? Enter anything between 1-10"
+    puts "How would you rate your drink? Enter anything between 1-10"
     rating = gets.chomp
     user.new_review({description: description, rating: rating, beer: beer})
   end
