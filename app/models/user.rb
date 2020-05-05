@@ -14,10 +14,7 @@ class User < ActiveRecord::Base
   end
   
 
-  #create methods to be able to sort by category(name, abv, rating)
-  def sort_beers_by_category(category)
-    #list all beers by category, give the user the option for ASC or DESC
-  end
+  
 
   #create methods to be able to search by(name, abv)
   def search_beer_by_name(beer_name)
