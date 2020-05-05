@@ -1,3 +1,4 @@
-class Beer 
+class Beer < ActiveRecord::Base
+  has_many :reviews
   
 end

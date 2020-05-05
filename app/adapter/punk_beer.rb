@@ -1,8 +1,9 @@
 require 'rest-client'
 require 'pry'
 require 'json'
+
 class PunkBeer
-  def self.get_data(author)
+  def self.get_data
     url = "https://api.punkapi.com/v2/beers"
     response = RestClient.get(url)
     json_response = JSON.parse(response)
@@ -11,10 +12,13 @@ class PunkBeer
     
     beers = json_response.map do |beer|
       { name: beer["name"], 
-        description: beer["description"]
+        description: beer["description"],
+        abv: beer["abv"]
+        # food_pairing: beer["food_pairing"]
+
       }
     end
-    binding.pry
+    
     # books = json_response["items"].map do |item| 
     #   {description: item["volumeInfo"]["description"],
     #   title: item["volumeInfo"]["title"]}
@@ -24,7 +28,7 @@ class PunkBeer
   
 end
 
-PunkBeer.get_data("thea")
+PunkBeer.get_data
 
 # name
 # description
