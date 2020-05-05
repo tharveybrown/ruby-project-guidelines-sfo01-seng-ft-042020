@@ -8,7 +8,7 @@ welcome = Welcome.new
 email = welcome.get_email
 user = welcome.find_or_create_user(email)
 
-binding.pry
-## TODO
-# welcome = Welcome.new
-# welcome.get_email
+menu = Menu.new
+choice = menu.choose_what_to_do
+
+# binding.pry

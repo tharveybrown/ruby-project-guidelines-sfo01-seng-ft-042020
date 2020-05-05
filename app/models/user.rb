@@ -5,11 +5,16 @@ class User < ActiveRecord::Base
 
 
   def new_review(attributes)
-    Review.new({
-      user: self.id, 
-      beer: attributes[:beer].id, 
-      rating: attributes[:rating], 
-      description: attributes[:description]
+    
+    user_id = self.id 
+    beer_id = attributes[:beer].id
+    description = attributes[:description]
+    rating = attributes[:rating].to_f
+    Review.create({
+      user_id: user_id, 
+      beer_id: beer_id, 
+      description: description, 
+      rating: rating
       })
   end
   
@@ -24,4 +29,5 @@ class User < ActiveRecord::Base
     #if no matches, return "No matching results"
   end
 end
+
 
