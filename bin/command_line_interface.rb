@@ -13,8 +13,9 @@ class Welcome
     user = User.find_by(email: user_email)
     if !user 
       sign_up(user_email)
+    else  
+      user
     end
-
     # Person.find_by(name: 'Spartacus', rating: 4)
   end
 
@@ -25,6 +26,17 @@ class Welcome
   end
 end
 
+class ReviewBeer
+  def select_beer
+    puts "Please select a beer"
+    beer_name = gets.chomp
+  end
+
+  #prompt to give user the option to list all by name or abv
+  #give the option for ASC or DESC
+  def 
+  end
+end
 
 
 # welcome
