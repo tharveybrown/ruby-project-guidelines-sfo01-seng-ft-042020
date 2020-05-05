@@ -2,21 +2,6 @@
 class User < ActiveRecord::Base
   has_many :reviews
   has_many :beers, through: :reviews
-
-
-  def new_review(attributes)
-    
-    user_id = self.id 
-    beer_id = attributes[:beer]
-    description = attributes[:description]
-    rating = attributes[:rating].to_f
-    Review.create({
-      user_id: user_id, 
-      beer_id: beer_id, 
-      description: description, 
-      rating: rating
-      })
-  end
   
 
   #create methods to be able to sort by category(name, abv, rating)
@@ -32,30 +17,13 @@ class User < ActiveRecord::Base
     #if no matches, return "No matching results"
   end
 
-    
-  def main_menu
-    # prompt = TTY::Prompt.new
-    
-    choices = {'write a review' => 1, 'find a beer to drink' => 2, 'exit' => 3}
-    
-    selection = PROMPT.select("Choose your destiny?", choices)
-    
-    case selection
-    when 1
-      self.review_beer
-    when 2
-      self.find_beer
-    when 3
-      self.exit_program
-      
-    end
-  end
+  
 
 
   def review_beer
     beer = self.select_beer
-    self.create_review(beer)
-    main_menu
+    new_review(beer)
+    Menu.main_menu(self)
   end
 
   def find_beer
@@ -79,12 +47,14 @@ class User < ActiveRecord::Base
     end
   end
 
-  def create_review(beer)
+  def new_review(beer)
+    review = Review.create({user_id: self.id})
     puts "What did you think of #{beer.name}? Please add a description:"
     description = gets.chomp
     puts "How would you rate your drink? Enter anything between 1-10"
-    rating = gets.chomp
-    self.new_review({description: description, rating: rating, beer: beer})
+    rating = gets.chomp.to_f
+    # binding.pry
+    Review.update(review.id, description: description, rating: rating, beer_id: beer.id)
   end
 
   def find_beer_to_review
@@ -93,15 +63,14 @@ class User < ActiveRecord::Base
     if !find_new_beer
       self.review_beer
     else
-      beer = random_beer
+      beer = Beer.random
     end
   end
 
-  def random_beer
-    Beer.all.sample
+  def my_reviews
+    puts self.reviews
+    Menu.main_menu(self)
   end
-
-
 end
 
 

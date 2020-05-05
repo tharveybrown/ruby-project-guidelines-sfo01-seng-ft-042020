@@ -26,3 +26,26 @@ class Welcome
 
 end
 
+
+class Menu
+
+  def self.main_menu(user)
+    # prompt = TTY::Prompt.new
+    
+    choices = {'write a review' => 1, 'find a beer to drink' => 2, 'view_my_reviews' => 3, 'exit' => 4}
+    
+    selection = PROMPT.select("Choose your destiny?", choices)
+    
+    case selection
+    when 1
+      user.review_beer
+    when 2
+      user.find_beer
+    when 3
+      # todo: add my reviews
+      user.my_reviews
+    when 4
+      user.exit_program
+    end
+  end
+end

@@ -7,7 +7,9 @@ puts "HELLO WORLD"
 welcome = Welcome.new
 email = welcome.get_email
 user = welcome.find_or_create_user(email)
-user.main_menu
+
+Menu.main_menu(user)
+
 
 
 # menu = Menu.new
