@@ -10,7 +10,7 @@ end
 
 def user_email_exists?(user_email)
   user = User.find_by(email: user_email)
-  if user
+  # if user
   # Person.find_by(name: 'Spartacus', rating: 4)
 end
 
