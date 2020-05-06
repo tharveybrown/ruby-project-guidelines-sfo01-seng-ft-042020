@@ -10,3 +10,5 @@ gem "rest-client"
 gem "faker"
 gem 'json'
 gem 'tty-prompt'
+gem 'ruby_figlet', '~> 0.6.1'
+gem 'ruby-progressbar', '~> 1.8', '>= 1.8.1'

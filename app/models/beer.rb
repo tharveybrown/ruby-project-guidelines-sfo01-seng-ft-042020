@@ -22,6 +22,7 @@ class Beer < ActiveRecord::Base
     Beer.all.sample
   end
 
+ 
 
  
 

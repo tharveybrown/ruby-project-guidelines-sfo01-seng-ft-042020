@@ -4,12 +4,13 @@ require_relative '../config/environment.rb'
 require_relative 'command_line_interface.rb'
 
 puts "HELLO WORLD"
+
 welcome = Welcome.new
-email = welcome.get_email
-user = welcome.find_or_create_user(email)
+
+user = welcome.welcome_user
 
 Menu.main_menu(user)
-
+Menu.find_beer
 
 
 # menu = Menu.new
