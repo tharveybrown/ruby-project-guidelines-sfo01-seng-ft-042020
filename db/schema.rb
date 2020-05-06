@@ -10,12 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_05_005342) do
+ActiveRecord::Schema.define(version: 2020_05_06_000105) do
 
   create_table "beers", force: :cascade do |t|
     t.string "name"
     t.string "description"
     t.float "abv"
+  end
+
+  create_table "beers_food_pairings", id: false, force: :cascade do |t|
+    t.integer "food_pairing_id", null: false
+    t.integer "beer_id", null: false
+    t.index ["beer_id", "food_pairing_id"], name: "index_beers_food_pairings_on_beer_id_and_food_pairing_id"
+    t.index ["food_pairing_id", "beer_id"], name: "index_beers_food_pairings_on_food_pairing_id_and_beer_id"
+  end
+
+  create_table "food_pairings", force: :cascade do |t|
+    t.string "food"
   end
 
   create_table "reviews", force: :cascade do |t|
@@ -30,4 +41,6 @@ ActiveRecord::Schema.define(version: 2020_05_05_005342) do
     t.string "email"
   end
 
+  add_foreign_key "beers_food_pairings", "beers"
+  add_foreign_key "beers_food_pairings", "food_pairings"
 end
