@@ -1,5 +1,4 @@
 class Welcome 
-
   def welcome_user
     # puts out a welcome message here!
     welcome_message
