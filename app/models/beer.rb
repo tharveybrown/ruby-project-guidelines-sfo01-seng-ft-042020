@@ -30,19 +30,16 @@ class Beer < ActiveRecord::Base
   def sort_beers_by_name
     #list all beers by category, give the user the option for ASC or DESC
     all_by_name = Beer.order(:name)
-    all_by_name
   end
 
   def sort_beers_by_abv
     #list all beers by category, give the user the option for ASC or DESC
     all_by_abv = Beer.order(:abv)
-    all_by_abv
   end
 
   def sort_beers_by_abv
     #list all beers by category, give the user the option for ASC or DESC
     all_by_rating = Review.order(:rating)
-    all_by_abv
   end
 
   #create methods to be able to search by(name, abv)
@@ -65,17 +62,16 @@ class Beer < ActiveRecord::Base
 
  
 
-  def search_beer_by_abv(abv_percentage)
+  def self.search_beer_by_abv(abv_percentage)
     #once user types in beer name, returns data(name, desc, abv)
     #set it so that if a user doesn't input full name of beer, would return list of all the beers that include whatever user
     #had input
     #if no matches, return "No matching results"
-    results = Beer.where("abv = ?", abv_percentage)
-    array_of_results = results.map{|beer| "Name: #{beer.name}, ABV:#{beer.abv}%, Description: #{beer.description}"}
-    if results
-      array_of_results
+    within_range = self.where(abv: abv_percentage-1..abv_percentage+1)
+    if within_range
+      results = within_range.map{|beer| "Name: #{beer.name}, ABV:#{beer.abv}%, Description: #{beer.description}"}
     else
-      "No matching results"
+      "No matching beers for this abv"
     end
   end
 
