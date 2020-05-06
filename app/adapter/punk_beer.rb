@@ -6,7 +6,7 @@ class PunkBeer
     json_response = JSON.parse(response)
     
     
-    beers_and_food_pairings = json_response.map do |beer|
+    beers = json_response.map do |beer|
       { name: beer["name"], 
         description: beer["description"],
         abv: beer["abv"],
