@@ -31,6 +31,9 @@ class Welcome
   end
 
   def welcome_message
+    # puts ColorizedString.color_samples  
+    cat = Emoji.find_by_alias("cat").raw
+    puts cat
     puts FIGLET.new("cheers!").to_s  
   end
 
@@ -39,37 +42,56 @@ end
 
 
 class Menu
+  
   def self.progress_bar
     progressbar = ProgressBar.create(format: "\e[0;34m%t: |%B|\e[0m")
-    100.times { progressbar.increment; sleep 0.01 }
+    100.times { progressbar.increment; sleep 0.005 }
     
   end
   def self.main_menu(user)
     # prompt = TTY::Prompt.new
     
-    choices = {'write a review' => 1, 'find a beer to drink' => 2, 'view_my_reviews' => 3, 'exit' => 4}
+    choices = {'write a review' => 1, 'find a beer to drink' => 2, 'view my reviews' => 3, 'exit' => 4}
     
     selection = PROMPT.select("Choose your destiny?", choices)
     
     case selection
+
     when 1
-      user.review_beer
+      new_review = ReviewBeer.new
+      beer_selection = new_review.select_beer
+      if !beer_selection
+        main_menu(user)
+      end
+      user.new_review(beer_selection)
+      main_menu(user)
     when 2
       beer_selection = find_beer
       
     when 3
       # todo: add my reviews
-      user.my_reviews
+      reviews = user.reviews
+      print_reviews(reviews)
+      main_menu(user)
     when 4
-      user.exit_program
+      self.exit_program
     end
+  end
+
+
+  def self.exit_program
+    hand = Emoji.find_by_alias("wave").raw
+    puts "Bye for now! #{hand}"
+    exit
   end
 
   def self.find_beer
 
     choices = {'find by food pairing' => 1, 'find a beer that I\'ve reviewed' => 2, 'find by abv' => 3}
     selection = PROMPT.select("How would you like to find a beer?", choices)
+    self.progress_bar
     case selection
+    
     when 1
       food = select_food
       beer_pairings = FoodPairing.find_beer(food)
@@ -82,6 +104,18 @@ class Menu
 
   end
 
+  def self.print_reviews(reviews)
+    reviews.map do |review|
+      beer = "Beer: #{review.beer.name}"
+      rating = "Rating: #{review.rating}"
+      description = "Review: #{review.description}"
+      puts ColorizedString[beer].colorize(:light_blue) 
+      puts ColorizedString[rating].colorize(:light_yellow) 
+      puts ColorizedString[description].colorize(:light_white) 
+      puts " ------ "
+    end
+  end
+  
   private
   def self.select_food
     foods = FoodPairing.select_random_foods(4)
@@ -98,4 +132,30 @@ class Menu
     puts "Description: #{beer.description}"
     puts "\n"
   end
+end
+
+class ReviewBeer
+
+  def select_beer
+    puts "What's the name of the beer that would you like to review?"
+    beer_name = gets.chomp
+    beer = Beer.find_by({name: beer_name})
+    if !beer
+      find_beer_to_review
+    else 
+      beer
+    end
+  end
+
+  def find_beer_to_review
+    not_found_msg = "This beer doesn't exist! Would you like to view some random beer names?".colorize(:blue).on_light_red
+    find_new_beer = PROMPT.yes?(not_found_msg)
+    if find_new_beer
+        beer = Beer.random
+    else
+      !!find_new_beer
+    end
+  end
+    
+
 end
