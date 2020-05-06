@@ -16,4 +16,4 @@ Menu.find_beer
 # menu = Menu.new
 # choice = menu.choose_what_to_do(user)
 
-# binding.pry
+binding.pry

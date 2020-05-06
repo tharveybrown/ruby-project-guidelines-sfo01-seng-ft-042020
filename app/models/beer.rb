@@ -5,17 +5,58 @@ class Beer < ActiveRecord::Base
   
 
   #method to list all users who have reviewed this beer?
-  def beer_reviewed_by
+  def user_reviews
+    list_of_reviews = self.reviews
+    list_of_reviews.map{|review| "User: #{review.user.name}, Rating: #{review.rating}, Review: #{review.description}"}
   end
+
+  
 
   #list of how many reviews a beer has
   def review_count
-
+    binding.pry
+    
   end
 
   #method to give highest rated beers
-  def highest_rated
+  def self.highest_rated
+    top_five_obj = Review.order(:rating).limit(5)
 
+    
+    puts "Here are our top 5 highest rated beers: #{top_five}"
+  end
+
+  #create methods to be able to sort by category(name, abv, rating)
+  def sort_beers_by_name
+    #list all beers by category, give the user the option for ASC or DESC
+    all_by_name = Beer.order(:name)
+    all_by_name
+  end
+
+  def sort_beers_by_abv
+    #list all beers by category, give the user the option for ASC or DESC
+    all_by_abv = Beer.order(:abv)
+    all_by_abv
+  end
+
+  def sort_beers_by_abv
+    #list all beers by category, give the user the option for ASC or DESC
+    all_by_rating = Review.order(:rating)
+    all_by_abv
+  end
+
+  #create methods to be able to search by(name, abv)
+  def search_beer_by_name(beer_name)
+    #once user types in beer name, returns data(name, desc, abv)
+    #set it so that if a user doesn't input full name of beer, would return list of all the beers that include whatever user
+    #had input
+    #if no matches, return "No matching results"
+    matched_beer = Beer.find_by(name: beer_name)
+    if matched_beer
+      "Name: #{matched_beer.name}, ABV:#{matched_beer.abv}%, Description: #{matched_beer.description}"
+    else  
+      "No matching results"
+    end
   end
 
   def self.random
@@ -24,6 +65,18 @@ class Beer < ActiveRecord::Base
 
  
 
- 
+  def search_beer_by_abv(abv_percentage)
+    #once user types in beer name, returns data(name, desc, abv)
+    #set it so that if a user doesn't input full name of beer, would return list of all the beers that include whatever user
+    #had input
+    #if no matches, return "No matching results"
+    results = Beer.where("abv = ?", abv_percentage)
+    array_of_results = results.map{|beer| "Name: #{beer.name}, ABV:#{beer.abv}%, Description: #{beer.description}"}
+    if results
+      array_of_results
+    else
+      "No matching results"
+    end
+  end
 
 end
