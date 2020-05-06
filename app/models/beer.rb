@@ -10,11 +10,11 @@ class Beer < ActiveRecord::Base
     list_of_reviews.map{|review| "User: #{review.user.name}, Rating: #{review.rating}, Review: #{review.description}"}
   end
 
+  
+
   #list of how many reviews a beer has
   def review_count
-    results = Review.where("beer_id = self.id")
-    review_count = results.count
-    puts "#{self.name} has #{review_count}"
+    binding.pry
     
   end
 
@@ -78,7 +78,4 @@ class Beer < ActiveRecord::Base
     end
   end
 
-  def self.random
-    Beer.all.sample
-  end
 end
