@@ -1,6 +1,7 @@
 class Beer < ActiveRecord::Base
   has_many :reviews
   has_many :users, through: :reviews
+  has_and_belongs_to_many :food_pairings
   
 
   #method to list all users who have reviewed this beer?

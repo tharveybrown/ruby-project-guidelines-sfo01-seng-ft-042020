@@ -1,3 +1,4 @@
+
 class PunkBeer
   def self.get_data
     url = "https://api.punkapi.com/v2/beers"
@@ -5,15 +6,18 @@ class PunkBeer
     json_response = JSON.parse(response)
     
     
-    beers = json_response.map do |beer|
+    beers_and_food_pairings = json_response.map do |beer|
       { name: beer["name"], 
         description: beer["description"],
-        abv: beer["abv"]
+        abv: beer["abv"],
         # food_pairing: beer["food_pairing"]
       }
     end
     
+    
+    
   end
   
 end
+
 
