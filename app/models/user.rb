@@ -11,10 +11,6 @@ class User < ActiveRecord::Base
     Menu.main_menu(self)
   end
 
-  def find_beer
-    puts ""
-    choices = {'write a review' => 1, 'find a beer to drink' => 2, 'exit' => 3}
-  end 
 
   def exit_program
     puts "Bye for now!"
