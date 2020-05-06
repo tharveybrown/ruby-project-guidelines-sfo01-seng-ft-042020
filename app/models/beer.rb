@@ -69,7 +69,7 @@ class Beer < ActiveRecord::Base
     #if no matches, return "No matching results"
     within_range = self.where(abv: abv_percentage-1..abv_percentage+1)
     if within_range
-      results = within_range.map{|beer| "Name: #{beer.name}, ABV:#{beer.abv}%, Description: #{beer.description}"}
+      within_range
     else
       "No matching beers for this abv"
     end

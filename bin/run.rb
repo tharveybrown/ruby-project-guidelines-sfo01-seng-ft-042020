@@ -10,10 +10,10 @@ welcome = Welcome.new
 user = welcome.welcome_user
 
 Menu.main_menu(user)
-Menu.find_beer
 
+# Menu.find_beer(user)
 
 # menu = Menu.new
 # choice = menu.choose_what_to_do(user)
 
-binding.pry
+# binding.pry

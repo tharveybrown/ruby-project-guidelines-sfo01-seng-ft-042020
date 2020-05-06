@@ -42,6 +42,8 @@ end
 
 
 class Menu
+  extend FindBeer::ClassMethods
+  extend ReviewBeer::ClassMethods
   
   def self.progress_bar
     progressbar = ProgressBar.create(format: "\e[0;34m%t: |%B|\e[0m")
@@ -58,15 +60,16 @@ class Menu
     case selection
 
     when 1
-      new_review = ReviewBeer.new
-      beer_selection = new_review.select_beer
+      
+      beer_selection = self.select_beer
       if !beer_selection
         main_menu(user)
       end
       user.new_review(beer_selection)
       main_menu(user)
     when 2
-      beer_selection = find_beer
+      beer_selection = find_beer(user)
+      main_menu(user)
       
     when 3
       # todo: add my reviews
@@ -85,9 +88,9 @@ class Menu
     exit
   end
 
-  def self.find_beer
+  def self.find_beer(user)
 
-    choices = {'find by food pairing' => 1, 'find a beer that I\'ve reviewed' => 2, 'find by abv' => 3}
+    choices = {'find by food pairing' => 1, 'find highest rated beers' => 2, 'find by abv' => 3}
     selection = PROMPT.select("How would you like to find a beer?", choices)
     self.progress_bar
     case selection
@@ -99,7 +102,11 @@ class Menu
       print_suggestion(beer_pairings)
       puts "Leave a review?"
       ## todo leave a review for user and beer or return to main menu if no 
-      
+    when 2 
+
+    when 3 
+      self.find_by_abv
+      main_menu(user)
     end
 
   end
@@ -132,30 +139,4 @@ class Menu
     puts "Description: #{beer.description}"
     puts "\n"
   end
-end
-
-class ReviewBeer
-
-  def select_beer
-    puts "What's the name of the beer that would you like to review?"
-    beer_name = gets.chomp
-    beer = Beer.find_by({name: beer_name})
-    if !beer
-      find_beer_to_review
-    else 
-      beer
-    end
-  end
-
-  def find_beer_to_review
-    not_found_msg = "This beer doesn't exist! Would you like to view some random beer names?".colorize(:blue).on_light_red
-    find_new_beer = PROMPT.yes?(not_found_msg)
-    if find_new_beer
-        beer = Beer.random
-    else
-      !!find_new_beer
-    end
-  end
-    
-
 end
