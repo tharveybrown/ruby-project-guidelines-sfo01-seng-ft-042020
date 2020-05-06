@@ -59,6 +59,10 @@ class Beer < ActiveRecord::Base
     end
   end
 
+  def self.random
+    Beer.all.sample
+  end
+
 
   def search_beer_by_abv(abv_percentage)
     #once user types in beer name, returns data(name, desc, abv)
