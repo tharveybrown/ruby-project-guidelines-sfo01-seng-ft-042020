@@ -50,7 +50,7 @@ end
   Review.create({user_id: User.all.sample.id, 
             beer_id: Beer.all.sample.id,
             rating: rand(0.0..10.0),
-            description: Faker::Hipster.sentences
+            description: Faker::Hipster.sentences(number: 1)[0]
             }
           )
 end
