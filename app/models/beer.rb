@@ -17,6 +17,11 @@ class Beer < ActiveRecord::Base
 
   end
 
+  def self.random
+    Beer.all.sample
+  end
+
+
  
 
 end

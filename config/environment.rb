@@ -8,4 +8,6 @@ ActiveRecord::Base.establish_connection(
   database: 'db/development.db'
 )
 
+
+PROMPT = TTY::Prompt.new
 require_all 'app'
