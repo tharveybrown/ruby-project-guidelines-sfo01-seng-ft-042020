@@ -14,16 +14,18 @@ class Beer < ActiveRecord::Base
 
   #list of how many reviews a beer has
   def review_count
-    binding.pry
+    
     
   end
 
   #method to give highest rated beers
   def self.highest_rated
-    top_five_obj = Review.order(:rating).limit(5)
-
+    top_reviews = Review.top_five
     
-    puts "Here are our top 5 highest rated beers: #{top_five}"
+    beers = top_reviews.map do |review|
+      Beer.find(review.beer_id)
+    end
+    beers
   end
 
   #create methods to be able to sort by category(name, abv, rating)
@@ -49,6 +51,7 @@ class Beer < ActiveRecord::Base
     #had input
     #if no matches, return "No matching results"
     matched_beer = Beer.find_by(name: beer_name)
+
     if matched_beer
       "Name: #{matched_beer.name}, ABV:#{matched_beer.abv}%, Description: #{matched_beer.description}"
     else  

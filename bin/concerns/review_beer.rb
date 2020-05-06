@@ -20,6 +20,19 @@ module ReviewBeer
         !!find_new_beer
       end
     end
+
+    def print_reviews(reviews)
+      reviews.map do |review|
+        beer = "Beer: #{review.beer.name}"
+        rating = "Rating: #{review.rating}"
+        description = "Review: #{review.description}"
+        puts ColorizedString[beer].colorize(:light_blue) 
+        puts ColorizedString[rating].colorize(:light_yellow) 
+        puts ColorizedString[description].colorize(:light_white) 
+        puts " ------ "
+      end
+    end
+    
   end
 
 end

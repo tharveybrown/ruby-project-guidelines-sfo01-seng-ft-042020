@@ -18,7 +18,7 @@ class Welcome
     if !user 
       sign_up(user_email)
     else  
-      puts "Welcome back, #{user.name}"
+      puts "\nWelcome back, #{user.name}"
       user
     end
     # Person.find_by(name: 'Spartacus', rating: 4)
@@ -32,9 +32,10 @@ class Welcome
 
   def welcome_message
     # puts ColorizedString.color_samples  
-    cat = Emoji.find_by_alias("cat").raw
-    puts cat
+    beers = Emoji.find_by_alias("beers").raw
+    puts "#{beers} #{beers}"
     puts FIGLET.new("cheers!").to_s  
+
   end
 
 
@@ -68,7 +69,7 @@ class Menu
       user.new_review(beer_selection)
       main_menu(user)
     when 2
-      beer_selection = find_beer(user)
+      beer_selection = self.find_beer
       main_menu(user)
       
     when 3
@@ -88,55 +89,8 @@ class Menu
     exit
   end
 
-  def self.find_beer(user)
 
-    choices = {'find by food pairing' => 1, 'find highest rated beers' => 2, 'find by abv' => 3}
-    selection = PROMPT.select("How would you like to find a beer?", choices)
-    self.progress_bar
-    case selection
-    
-    when 1
-      food = select_food
-      beer_pairings = FoodPairing.find_beer(food)
-      self.progress_bar
-      print_suggestion(beer_pairings)
-      puts "Leave a review?"
-      ## todo leave a review for user and beer or return to main menu if no 
-    when 2 
 
-    when 3 
-      self.find_by_abv
-      main_menu(user)
-    end
-
-  end
-
-  def self.print_reviews(reviews)
-    reviews.map do |review|
-      beer = "Beer: #{review.beer.name}"
-      rating = "Rating: #{review.rating}"
-      description = "Review: #{review.description}"
-      puts ColorizedString[beer].colorize(:light_blue) 
-      puts ColorizedString[rating].colorize(:light_yellow) 
-      puts ColorizedString[description].colorize(:light_white) 
-      puts " ------ "
-    end
-  end
   
-  private
-  def self.select_food
-    foods = FoodPairing.select_random_foods(4)
-    choices = foods.map { |element| 
-      element[:food]
-    }
-    selection = PROMPT.select("Select a food to find a suitable beer:", choices)
-  end
 
-  def self.print_suggestion(beers)
-    beer = beers.sample
-    puts "We recommend you try #{beer.name}, abv #{beer.abv}"
-    puts "\n"
-    puts "Description: #{beer.description}"
-    puts "\n"
-  end
 end
