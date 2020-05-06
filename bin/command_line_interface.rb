@@ -18,7 +18,7 @@ class Welcome
     if !user 
       sign_up(user_email)
     else  
-      puts "Welcome back, #{user.name}"
+      puts "\nWelcome back, #{user.name}"
       user
     end
     # Person.find_by(name: 'Spartacus', rating: 4)
@@ -31,7 +31,11 @@ class Welcome
   end
 
   def welcome_message
+    # puts ColorizedString.color_samples  
+    beers = Emoji.find_by_alias("beers").raw
+    puts "#{beers} #{beers}"
     puts FIGLET.new("cheers!").to_s  
+
   end
 
 
@@ -39,63 +43,54 @@ end
 
 
 class Menu
+  extend FindBeer::ClassMethods
+  extend ReviewBeer::ClassMethods
+  
   def self.progress_bar
     progressbar = ProgressBar.create(format: "\e[0;34m%t: |%B|\e[0m")
-    100.times { progressbar.increment; sleep 0.01 }
+    100.times { progressbar.increment; sleep 0.005 }
     
   end
   def self.main_menu(user)
     # prompt = TTY::Prompt.new
     
-    choices = {'write a review' => 1, 'find a beer to drink' => 2, 'view_my_reviews' => 3, 'exit' => 4}
+    choices = {'write a review' => 1, 'find a beer to drink' => 2, 'view my reviews' => 3, 'exit' => 4}
     
     selection = PROMPT.select("Choose your destiny?", choices)
     
     case selection
+
     when 1
-      user.review_beer
+      
+      beer_selection = self.select_beer
+      if !beer_selection
+        main_menu(user)
+      end
+      user.new_review(beer_selection)
+      main_menu(user)
     when 2
-      beer_selection = find_beer
+      beer_selection = self.find_beer
+      main_menu(user)
       
     when 3
       # todo: add my reviews
-      user.my_reviews
+      reviews = user.reviews
+      print_reviews(reviews)
+      main_menu(user)
     when 4
-      user.exit_program
+      self.exit_program
     end
   end
 
-  def self.find_beer
 
-    choices = {'find by food pairing' => 1, 'find a beer that I\'ve reviewed' => 2, 'find by abv' => 3}
-    selection = PROMPT.select("How would you like to find a beer?", choices)
-    case selection
-    when 1
-      food = select_food
-      beer_pairings = FoodPairing.find_beer(food)
-      self.progress_bar
-      print_suggestion(beer_pairings)
-      puts "Leave a review?"
-      ## todo leave a review for user and beer or return to main menu if no 
-      
-    end
-
+  def self.exit_program
+    hand = Emoji.find_by_alias("wave").raw
+    puts "Bye for now! #{hand}"
+    exit
   end
 
-  private
-  def self.select_food
-    foods = FoodPairing.select_random_foods(4)
-    choices = foods.map { |element| 
-      element[:food]
-    }
-    selection = PROMPT.select("Select a food to find a suitable beer:", choices)
-  end
 
-  def self.print_suggestion(beers)
-    beer = beers.sample
-    puts "We recommend you try #{beer.name}, abv #{beer.abv}"
-    puts "\n"
-    puts "Description: #{beer.description}"
-    puts "\n"
-  end
+
+  
+
 end
