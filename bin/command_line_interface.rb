@@ -40,12 +40,44 @@ class Menu
     when 1
       user.review_beer
     when 2
-      user.find_beer
+      beer_selection = find_beer
+      
     when 3
       # todo: add my reviews
       user.my_reviews
     when 4
       user.exit_program
     end
+  end
+
+  def self.find_beer
+
+    choices = {'find by food pairing' => 1, 'find a beer that I\'ve reviewed' => 2, 'find by abv' => 3}
+    selection = PROMPT.select("How would you like to find a beer?", choices)
+    case selection
+    when 1
+      food = select_food
+      beer_pairings = FoodPairing.find_beer(food)
+      print_suggestion(beer_pairings)
+      puts "Leave a review?"
+      ## todo leave a review for user and beer or return to main menu if no 
+      
+    end
+
+  end
+
+  private
+  def self.select_food
+    foods = FoodPairing.select_random_foods(4)
+    choices = foods.map { |element| 
+      element[:food]
+    }
+    selection = PROMPT.select("Select a food to find a suitable beer:", choices)
+  end
+
+  def self.print_suggestion(beers)
+    beer = beers.sample
+    puts "We recommend you try #{beer.name}, abv #{beer.abv}"
+    puts "Description: #{beer.description}"
   end
 end
