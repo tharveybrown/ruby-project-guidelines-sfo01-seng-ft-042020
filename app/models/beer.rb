@@ -20,11 +20,7 @@ class Beer < ActiveRecord::Base
 
   #method to give highest rated beers
   def self.highest_rated
-    top_reviews = Review.top_five
-    
-    beers = top_reviews.map do |review|
-      Beer.find(review.beer_id)
-    end
+  
     beers
   end
 
