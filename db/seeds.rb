@@ -4,6 +4,7 @@ Beer.destroy_all
 User.destroy_all
 FoodPairing.destroy_all
 Review.destroy_all
+
 beers = PunkBeer.get_data
 # creates a new instance in Ruby and commits that transaction to the database
 # it is running .new + .save together
@@ -29,7 +30,7 @@ food_and_beer_id.each do |h|
   beer = Beer.find_by_id(h[:beer])
   food_list = h[:food_pairings]
   food_list.each do |item|
-    food = FoodPairing.new(food: item)
+    food = FoodPairing.create(food: item)
     beer.food_pairings << food
   end
 end
