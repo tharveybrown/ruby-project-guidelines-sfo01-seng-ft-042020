@@ -102,7 +102,7 @@ class Beer < ActiveRecord::Base
   #highest rated beers
   def self.highest_rated_by_avg
     group = Review.group(:beer_id).average(:rating)
-    beer_to_avg = group.transform_keys {|k| self.find(k).name }
+    beer_to_avg = group.transform_keys {|k| self.find(k) }
     Hash[beer_to_avg.sort_by {|k,v| -v}[0..4]]
   end
   
