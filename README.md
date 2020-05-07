@@ -1,1 +1,2 @@
-Be sure to run bundle install and rake db:migrate
+### Installation
+B
