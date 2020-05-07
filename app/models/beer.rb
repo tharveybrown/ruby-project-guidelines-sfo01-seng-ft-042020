@@ -45,13 +45,14 @@ class Beer < ActiveRecord::Base
 
     case selection
       when 1
-        self.order(name: :desc)
+        self.sort_beers_by_name_desc
       when 2
         self.order(abv: :desc)
     end
   end
 
   def self.sort_beers_by_name_desc
+    binding.pry
     self.order(name: :desc)
   end
 
