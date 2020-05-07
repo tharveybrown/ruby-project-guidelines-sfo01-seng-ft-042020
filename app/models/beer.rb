@@ -111,8 +111,6 @@ class Beer < ActiveRecord::Base
   
   def self.search_beer_by_abv(abv_percentage)
     #once user types in beer name, returns data(name, desc, abv)
-    #set it so that if a user doesn't input full name of beer, would return list of all the beers that include whatever user
-    #had input
     #if no matches, return "No matching results"
     within_range = self.where(abv: abv_percentage-1..abv_percentage+1)
     if within_range
@@ -126,7 +124,7 @@ class Beer < ActiveRecord::Base
   def self.highest_rated_by_avg
     group = Review.group(:beer_id).average(:rating)
     beer_to_avg = group.transform_keys {|k| self.find(k).name }
-    Hash[beer_to_avg.sort_by {|k,v| v}.reverse]
+    Hash[beer_to_avg.sort_by {|k,v| -v}[0..4]]
   end
   
   

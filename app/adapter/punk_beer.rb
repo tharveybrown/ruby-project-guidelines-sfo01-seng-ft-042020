@@ -8,13 +8,11 @@ class PunkBeer
     beers = json_response.map do |beer|
       { name: beer["name"], 
         description: beer["description"],
-        abv: beer["abv"]
-        # food_pairing: beer["food_pairing"]
+        abv: beer["abv"],
+        tagline: beer["tagline"]
       }
     end
-
   end
-  
 end
 
 
