@@ -19,7 +19,6 @@ class Review < ActiveRecord::Base
       print "Rating:".colorize(:light_green).underline
       print " #{rating}".colorize(:light_green)
       puts "\n-----"
-    
     end
     
   end

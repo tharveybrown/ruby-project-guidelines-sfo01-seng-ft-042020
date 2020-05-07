@@ -93,6 +93,10 @@ class Menu
     when 2
       # binding.pry
       reviews = user.reviews
+      if reviews.empty?
+        puts "Looks like you haven't written any reviews yet!\n".colorize(:red)
+        return 
+      end
       Review.print_reviews(reviews)
       
     end
