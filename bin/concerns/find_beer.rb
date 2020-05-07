@@ -33,10 +33,12 @@ module FindBeer
       beers.map do |beer|
         beer_name = "Beer: #{beer[:name]}"
         beer_abv = "ABV: #{beer[:abv]}"
+        beer_tagline = "Tagline: #{beer[:tagline]}"
         beer_description = "Description: #{beer[:description]}"
-        puts ColorizedString[beer_name].colorize(:light_green)
-        puts ColorizedString[beer_abv].colorize(:light_blue)
-        puts ColorizedString[beer_description].colorize(:light_white)
+        puts beer_name.colorize(:light_green)
+        puts beer_abv.colorize(:pink)
+        puts beer_tagline.colorize(:light_blue)
+        puts beer_description.colorize(:light_white)
         puts "-----"
       end
     end
@@ -62,9 +64,11 @@ module FindBeer
 
     def print_suggestion(beers)
       beer = beers.sample
-      puts "We recommend you try #{beer.name}, abv #{beer.abv}"
+      print"We recommend you try: ".colorize(:light_magenta)
+      print "#{beer.name}, abv #{beer.abv}".colorize(:light_magenta).on_light_white 
       puts "\n"
-      puts "Description: #{beer.description}"
+      puts "Tagline: #{beer.tagline}".colorize(:light_yellow)
+      puts "Description: #{beer.description}".colorize(:light_white)
       puts "\n"
     end
     
