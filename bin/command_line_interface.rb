@@ -29,6 +29,7 @@ class Welcome
 
   def welcome_user_message(user)
     name = user.name.split(' ')[0]
+    binding.pry
     puts FIGLET.new("Welcome,\n#{name}", 'block')
     puts "\n"
   end

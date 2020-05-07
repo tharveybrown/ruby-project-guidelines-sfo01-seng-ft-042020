@@ -10,6 +10,7 @@ ActiveRecord::Base.establish_connection(
 ActiveRecord::Base.logger = Logger.new(STDOUT)
 ActiveRecord::Base.logger.level = 1 
 
+
 require 'ruby_figlet'
 PROMPT = TTY::Prompt.new
 FIGLET = RubyFiglet::Figlet
@@ -18,3 +19,5 @@ require_relative '../bin/concerns/review_beer.rb'
 require_all 'app'
 require 'colorize'
 require 'colorized_string'
+
+
