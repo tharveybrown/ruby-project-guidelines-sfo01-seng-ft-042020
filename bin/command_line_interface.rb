@@ -74,7 +74,7 @@ class Menu
       
     when 3
       # todo: add my reviews
-      review_menu
+      review_menu(user)
       main_menu(user)
       
     when 4
@@ -82,7 +82,7 @@ class Menu
     end
   end
 
-  def self.review_menu
+  def self.review_menu(user)
     choices = {'top reviews' => 1, 'my reviews' => 2}
     
     selection = PROMPT.select("which reviews would you like to see?\n", choices)
@@ -91,8 +91,9 @@ class Menu
       top_five = Review.top_reviews(5)
       Review.print_reviews(top_five)
     when 2
+      # binding.pry
       reviews = user.reviews
-      print_reviews(reviews)
+      Review.print_reviews(reviews)
       
     end
   end
