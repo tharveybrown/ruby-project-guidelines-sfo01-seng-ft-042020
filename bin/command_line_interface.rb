@@ -15,18 +15,28 @@ class Welcome
   def find_or_create_user(user_email)
     user = User.find_by(email: user_email)
     if !user 
-      sign_up(user_email)
+      user = sign_up(user_email)
+      welcome_user_message(user)
+      user
     else  
-      puts "\nWelcome back, #{user.name}"
+      welcome_user_message(user)
       user
     end
+
+    
     # Person.find_by(name: 'Spartacus', rating: 4)
+  end
+
+  def welcome_user_message(user)
+    name = user.name.split(' ')[0]
+    puts FIGLET.new("Welcome,\n#{name}", 'block')
+    puts "\n"
   end
 
   def sign_up(user_email)
     puts "Cheers! Whats your name?"
     name = gets.chomp
-    User.create({ name: name, email: user_email})
+    user = User.create({ name: name, email: user_email})
   end
 
   def welcome_message

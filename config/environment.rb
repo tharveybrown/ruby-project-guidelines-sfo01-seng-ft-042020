@@ -2,9 +2,6 @@ require 'bundler'
 Bundler.require
 
 
-
-
-
 ActiveRecord::Base.establish_connection(
   adapter: 'sqlite3', 
   database: 'db/development.db'
@@ -13,7 +10,7 @@ ActiveRecord::Base.establish_connection(
 ActiveRecord::Base.logger = Logger.new(STDOUT)
 ActiveRecord::Base.logger.level = 1 
 
-
+require 'ruby_figlet'
 PROMPT = TTY::Prompt.new
 FIGLET = RubyFiglet::Figlet
 require_relative '../bin/concerns/find_beer.rb'
