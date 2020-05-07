@@ -54,7 +54,7 @@ class Menu
     # binding.pry
     # prompt = TTY::Prompt.new
     
-    choices = {'write a review' => 1, 'find a beer to drink' => 2, 'view my reviews' => 3, 'highest rated beers' => 4, 'sort beers' => 5, 'exit' => 6}
+    choices = {'write a review' => 1, 'find a beer to drink' => 2, 'view reviews' => 3, 'highest rated beers' => 4, 'sort beers' => 5, 'exit' => 6}
     
     selection = PROMPT.select("Choose your destiny?", choices)
     
