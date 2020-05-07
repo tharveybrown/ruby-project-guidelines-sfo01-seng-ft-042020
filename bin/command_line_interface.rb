@@ -16,21 +16,22 @@ class Welcome
     user = User.find_by(email: user_email)
     if !user 
       user = sign_up(user_email)
-      welcome_user_message(user)
+      welcome_user_message(user, "new")
       user
     else  
-      welcome_user_message(user)
+      welcome_user_message(user, "returning")
       user
     end
-
-    
-    # Person.find_by(name: 'Spartacus', rating: 4)
   end
 
-  def welcome_user_message(user)
-    name = user.name.split(' ')[0]
-    puts FIGLET.new("Welcome,\n#{name}", 'block')
-    puts "\n"
+  def welcome_user_message(user, type)
+    sparkle = Emoji.find_by_alias("sparkles").raw
+    first_name = user.name.split(' ')[0]
+    if type == "new"
+      puts "\n#{sparkle} Welcome, #{first_name} #{sparkle}\n".colorize(:light_blue)
+    else 
+      puts "\n#{sparkle} Welcome Back, #{first_name} #{sparkle}\n".colorize(:light_blue)
+    end
   end
 
   def sign_up(user_email)
@@ -46,8 +47,6 @@ class Welcome
     puts FIGLET.new("cheers!").to_s  
 
   end
-
-
 end
 
 
@@ -58,32 +57,30 @@ class Menu
   def self.progress_bar
     progressbar = ProgressBar.create(format: "\e[0;34m%t: |%B|\e[0m")
     100.times { progressbar.increment; sleep 0.005 }
-    
   end
+
   def self.main_menu(user)
-    # binding.pry
-    # prompt = TTY::Prompt.new
-    
-    choices = {'write a review' => 1, 'find a beer to drink' => 2, 'view reviews' => 3, 'highest rated beers' => 4, 'sort beers' => 5, 'exit' => 6}
-    
+    choices = {
+      'write a review' => 1, 
+      'find a beer to drink' => 2, 
+      'view reviews' => 3, 
+      'highest rated beers' => 4, 
+      'sort beers' => 5, 
+      'exit' => 6
+    }
     selection = PROMPT.select("Choose your destiny?", choices)
     
     case selection
-
     when 1
-      
       beer_selection = self.select_beer
-      if !beer_selection
-        main_menu(user)
+      if beer_selection
+        user.new_review(beer_selection)
       end
-      user.new_review(beer_selection)
       main_menu(user)
     when 2
       beer_selection = self.find_beer
       main_menu(user)
-      
     when 3
-      # todo: add my reviews
       review_menu(user)
       main_menu(user)
     when 4
@@ -99,7 +96,6 @@ class Menu
 
   def self.review_menu(user)
     choices = {'top reviews' => 1, 'my reviews' => 2}
-    
     selection = PROMPT.select("which reviews would you like to see?\n", choices)
     case selection
     when 1
@@ -113,7 +109,6 @@ class Menu
         return 
       end
       Review.print_reviews(reviews)
-      
     end
   end
 
@@ -122,9 +117,4 @@ class Menu
     puts "Bye for now! #{hand}"
     exit
   end
-
-
-
-  
-
 end
