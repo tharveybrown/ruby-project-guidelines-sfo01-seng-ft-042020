@@ -11,5 +11,6 @@ class FoodPairingApi
         food_pairings: beer["food_pairing"]
       }
     end
+  
   end  
 end

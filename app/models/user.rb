@@ -7,29 +7,6 @@ class User < ActiveRecord::Base
   
 
 
-  def review_beer
-    beer = self.select_beer
-    new_review(beer)
-    Menu.main_menu(self)
-  end
-
-
-  def exit_program
-    puts "Bye for now!"
-    exit
-  end
-
-  def select_beer
-    puts "What's the name of the beer that would you like to review?"
-    beer_name = gets.chomp
-    beer = Beer.find_by({name: beer_name})
-    if !beer
-      beer = self.find_beer_to_review
-    else 
-      beer
-    end
-  end
-
   def new_review(beer)
     review = Review.create({user_id: self.id})
     puts "What did you think of #{beer.name}? Please add a description:"

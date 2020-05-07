@@ -60,6 +60,7 @@ class Beer < ActiveRecord::Base
     #had input
     #if no matches, return "No matching results"
     matched_beer = Beer.find_by(name: beer_name)
+
     if matched_beer
       "Name: #{matched_beer.name}, ABV:#{matched_beer.abv}%, Description: #{matched_beer.description}"
     else  
@@ -73,12 +74,11 @@ class Beer < ActiveRecord::Base
     #set it so that if a user doesn't input full name of beer, would return list of all the beers that include whatever user
     #had input
     #if no matches, return "No matching results"
-    results = Beer.where("abv = ?", abv_percentage)
-    array_of_results = results.map{|beer| "Name: #{beer.name}, ABV:#{beer.abv}%, Description: #{beer.description}"}
-    if results
-      array_of_results
+    within_range = self.where(abv: abv_percentage-1..abv_percentage+1)
+    if within_range
+      within_range
     else
-      "No matching results"
+      "No matching beers for this abv"
     end
   end
 

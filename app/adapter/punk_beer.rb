@@ -5,17 +5,14 @@ class PunkBeer
     response = RestClient.get(url)
     json_response = JSON.parse(response)
     
-    
     beers = json_response.map do |beer|
       { name: beer["name"], 
         description: beer["description"],
-        abv: beer["abv"],
+        abv: beer["abv"]
         # food_pairing: beer["food_pairing"]
       }
     end
-    
-    
-    
+
   end
   
 end
