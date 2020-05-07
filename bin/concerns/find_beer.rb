@@ -44,9 +44,11 @@ module FindBeer
     end
 
     def print_ratings(beers)
-      beers.each do |k, v|
+      beers.each_with_index do |(k, v), index|
+        i_plus_one = index +1
         beer_name = "Beer: #{k}"
-        beer_rating = "Avg Rating: #{v.round(2)}"
+        beer_rating = "Avg Rating: #{v.round(1)}"
+        puts "#{i_plus_one}."
         puts ColorizedString[beer_name].colorize(:light_blue)
         puts ColorizedString[beer_rating].colorize(:light_green)
         puts "-----"

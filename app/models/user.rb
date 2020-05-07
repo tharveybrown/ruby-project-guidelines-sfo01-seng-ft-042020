@@ -24,14 +24,6 @@ class User < ActiveRecord::Base
       beer = Beer.random
     end
   end
-
-  def my_reviews
-    #it would be cool to maybe add a timestamp of when the review was created
-    review_obj = self.reviews
-    review_obj.map {|review|  puts "Beer: #{review.beer.name} , Rating: #{review.rating}, Review: #{review.description}"}
-  end
-
-  
 end
 
 

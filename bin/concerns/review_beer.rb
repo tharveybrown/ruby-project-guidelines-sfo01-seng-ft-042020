@@ -26,14 +26,14 @@ module ReviewBeer
         beer = "Beer: #{review.beer.name}"
         rating = "Rating: #{review.rating}"
         description = "Review: #{review.description}"
+        created_at = "Created at: #{review.created_at}"
+        puts ColorizedString[created_at].colorize(:light_white) 
         puts ColorizedString[beer].colorize(:light_blue) 
         puts ColorizedString[rating].colorize(:light_yellow) 
         puts ColorizedString[description].colorize(:light_white) 
         puts " ------ "
       end
     end
-    
   end
-
 end
 
