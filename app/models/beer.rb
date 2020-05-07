@@ -20,8 +20,20 @@ class Beer < ActiveRecord::Base
 
   #method to give highest rated beers
   def self.highest_rated
-  
-    beers
+    start = Time.now
+    Review.order('rating desc').limit(5)
+    finish = Time.now
+    diff = finish - start
+    puts ("DIFF_a: #{diff}")
+  end
+
+  def self.highest_rated_by_avg
+    
+    group = Review.group(:beer_id).average(:rating)
+    beer_to_avg = group.transform_keys {|k| self.find(k).name }
+    top_five = Hash[beer_to_avg.sort_by { |k,v| -v }[0..4]]
+
+    
   end
 
   #create methods to be able to sort by category(name, abv, rating)
