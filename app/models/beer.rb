@@ -64,7 +64,14 @@ class Beer < ActiveRecord::Base
     ordered_beers = self.order(:name)
     ordered_beers.each_with_index do |beer,index|
       i_plus_one = index +1
-      puts "#{i_plus_one}. Name: #{beer.name}, Abv: #{beer.abv}, Description: #{beer.description}"
+      beer_name = "Beer: #{beer.name}"
+      abv = "Abv: #{beer.abv}"
+      description = "Description: #{beer.description}"
+      puts "#{i_plus_one}."
+      puts ColorizedString[beer_name].colorize(:light_blue) 
+      puts ColorizedString[abv].colorize(:light_yellow)
+      puts ColorizedString[description].colorize(:light_white) 
+      puts " ------ "
     end
   end
   
@@ -72,7 +79,14 @@ class Beer < ActiveRecord::Base
     ordered_beers = self.order(name: :desc)
     ordered_beers.each_with_index do |beer,index|
       i_plus_one = index +1
-      puts "#{i_plus_one}. Name: #{beer.name}, Abv: #{beer.abv}, Description: #{beer.description}"
+      beer_name = "Beer: #{beer.name}"
+      abv = "Abv: #{beer.abv}"
+      description = "Description: #{beer.description}"
+      puts "#{i_plus_one}."
+      puts ColorizedString[beer_name].colorize(:light_blue) 
+      puts ColorizedString[abv].colorize(:light_yellow)
+      puts ColorizedString[description].colorize(:light_white) 
+      puts " ------ "
     end
   end
 
@@ -80,7 +94,14 @@ class Beer < ActiveRecord::Base
     ordered_beers = self.order(:abv)
     ordered_beers.each_with_index do |beer,index|
       i_plus_one = index +1
-      puts "#{i_plus_one}. Name: #{beer.name}, Abv: #{beer.abv}, Description: #{beer.description}"
+      beer_name = "Beer: #{beer.name}"
+      abv = "Abv: #{beer.abv}"
+      description = "Description: #{beer.description}"
+      puts "#{i_plus_one}."
+      puts ColorizedString[beer_name].colorize(:light_blue) 
+      puts ColorizedString[abv].colorize(:light_yellow)
+      puts ColorizedString[description].colorize(:light_white) 
+      puts " ------ "
     end
   end
 
@@ -88,7 +109,14 @@ class Beer < ActiveRecord::Base
     ordered_beers = self.order(abv: :desc)
     ordered_beers.each_with_index do |beer,index|
       i_plus_one = index +1
-      puts "#{i_plus_one}. Name: #{beer.name}, Abv: #{beer.abv}, Description: #{beer.description}"
+      beer_name = "Beer: #{beer.name}"
+      abv = "Abv: #{beer.abv}"
+      description = "Description: #{beer.description}"
+      puts "#{i_plus_one}."
+      puts ColorizedString[beer_name].colorize(:light_blue) 
+      puts ColorizedString[abv].colorize(:light_yellow)
+      puts ColorizedString[description].colorize(:light_white) 
+      puts " ------ "
     end
   end
 
