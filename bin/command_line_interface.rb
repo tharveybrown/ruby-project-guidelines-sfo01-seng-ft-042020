@@ -53,6 +53,7 @@ end
 class Menu
   extend FindBeer::ClassMethods
   extend ReviewBeer::ClassMethods
+  extend SortBeer::ClassMethods
   
   def self.progress_bar
     progressbar = ProgressBar.create(format: "\e[0;34m%t: |%B|\e[0m")
@@ -60,14 +61,11 @@ class Menu
   end
 
   def self.main_menu(user)
-    choices = {
-      'write a review' => 1, 
-      'find a beer to drink' => 2, 
-      'view reviews' => 3, 
-      'highest rated beers' => 4, 
-      'sort beers' => 5, 
-      'exit' => 6
-    }
+    # binding.pry
+    # prompt = TTY::Prompt.new
+    
+    choices = {'write a review' => 1, 'find a beer to drink' => 2, 'view reviews' => 3, 'sort beers' => 4, 'exit' => 5}
+    
     selection = PROMPT.select("Choose your destiny?", choices)
     
     case selection
@@ -84,12 +82,9 @@ class Menu
       review_menu(user)
       main_menu(user)
     when 4
-      Beer.highest_rated
+      self.sort_menu
       main_menu(user)
     when 5
-      Beer.sort_beers_option
-      main_menu(user)
-    when 6
       self.exit_program
     end
   end
