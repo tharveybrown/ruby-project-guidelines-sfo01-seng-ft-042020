@@ -7,6 +7,7 @@ class Review < ActiveRecord::Base
   end
 
   def self.print_reviews(reviews)
+    
     reviews.map do |review|
       beer_name = Beer.find(review.beer_id).name 
       desc = review.description
@@ -18,7 +19,7 @@ class Review < ActiveRecord::Base
       print "Rating:".colorize(:light_green).underline
       print " #{rating}".colorize(:light_green)
       puts "\n-----"
-      # binding.pry
     end
+    
   end
 end
