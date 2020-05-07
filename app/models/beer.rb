@@ -32,38 +32,64 @@ class Beer < ActiveRecord::Base
     end
   end
 
-  #create methods to be able to sort by category(name, abv, rating)
-  def self.sort_beers_by_name_asc
-    #list all beers by category, give the user the option for ASC or DESC
-    self.order(:name)
-  end
-
-
+  
+  
   def self.sort_beers_option
     choices = {'by name' => 1, 'by abv' => 2}
     selection = PROMPT.select("How would you like to sort?", choices)
-
+    
     case selection
+    when 1
+      options = {'A - Z' => 1, 'Z - A' => 2}
+      selection1 = PROMPT.select("How would you like to sort?", options)
+      case selection1
       when 1
-        self.sort_beers_by_name_desc
+        self.sort_beers_by_name_asc
       when 2
-        self.order(abv: :desc)
+        self.sort_beers_by_name_desc
+      end
+    when 2
+      options = {'lowest abv' => 1, 'highest abv' => 2}
+      selection2 = PROMPT.select("How would you like to sort?", options)
+      case selection2
+      when 1
+        self.sort_beers_by_abv_asc
+      when 2
+        self.sort_beers_by_abv_desc
+      end
     end
   end
 
+  def self.sort_beers_by_name_asc
+    ordered_beers = self.order(:name)
+    ordered_beers.each_with_index do |beer,index|
+      i_plus_one = index +1
+      puts "#{i_plus_one}. Name: #{beer.name}, Abv: #{beer.abv}, Description: #{beer.description}"
+    end
+  end
+  
   def self.sort_beers_by_name_desc
-    binding.pry
-    self.order(name: :desc)
+    ordered_beers = self.order(name: :desc)
+    ordered_beers.each_with_index do |beer,index|
+      i_plus_one = index +1
+      puts "#{i_plus_one}. Name: #{beer.name}, Abv: #{beer.abv}, Description: #{beer.description}"
+    end
   end
 
   def self.sort_beers_by_abv_asc
-    #list all beers by category, give the user the option for ASC or DESC
-    self.order(:abv)
+    ordered_beers = self.order(:abv)
+    ordered_beers.each_with_index do |beer,index|
+      i_plus_one = index +1
+      puts "#{i_plus_one}. Name: #{beer.name}, Abv: #{beer.abv}, Description: #{beer.description}"
+    end
   end
 
   def self.sort_beers_by_abv_desc
-    #list all beers by category, give the user the option for ASC or DESC
-    self.order(abv: :desc)
+    ordered_beers = self.order(abv: :desc)
+    ordered_beers.each_with_index do |beer,index|
+      i_plus_one = index +1
+      puts "#{i_plus_one}. Name: #{beer.name}, Abv: #{beer.abv}, Description: #{beer.description}"
+    end
   end
 
 
