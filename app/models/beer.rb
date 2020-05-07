@@ -23,9 +23,9 @@ class Beer < ActiveRecord::Base
 #method to give highest rated beers
   def self.highest_rated
     # binding.pry
-    array_of_beers_by_avg = Beer.joins(:reviews).group("beers.id").order("avg(reviews.rating) desc")
+    array_of_beers_by_avg = Beer.joins(:reviews).group("beers.id").order("avg(reviews.rating) desc").limit(5)
     names = array_of_beers_by_avg.map{|beer| beer.name}
-    numbers = array_of_beers_by_avg.map{|beer| beer.get_rating_average}
+    numbers = array_of_beers_by_avg.map{|beer| beer.get_rating_average.round(1)}
     results = names.zip(numbers)
     results.each do |name, rating|
       puts "Name: #{name}, Average Rating: #{rating}"
@@ -36,6 +36,19 @@ class Beer < ActiveRecord::Base
   def self.sort_beers_by_name_asc
     #list all beers by category, give the user the option for ASC or DESC
     self.order(:name)
+  end
+
+
+  def self.sort_beers_option
+    choices = {'by name' => 1, 'by abv' => 2}
+    selection = PROMPT.select("How would you like to sort?", choices)
+
+    case selection
+      when 1
+        self.order(name: :desc)
+      when 2
+        self.order(abv: :desc)
+    end
   end
 
   def self.sort_beers_by_name_desc

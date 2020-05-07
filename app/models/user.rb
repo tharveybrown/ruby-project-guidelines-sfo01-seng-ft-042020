@@ -3,7 +3,6 @@ class User < ActiveRecord::Base
   has_many :reviews
   has_many :beers, through: :reviews
   validates :name, presence: true
-  validates :name
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }
   
 
@@ -27,9 +26,9 @@ class User < ActiveRecord::Base
   end
 
   def my_reviews
+    #it would be cool to maybe add a timestamp of when the review was created
     review_obj = self.reviews
-    review_obj.map {|review|  puts "#{review.beer.name} , Rating: #{review.rating}, Review: #{review.description}"}
-    # Menu.main_menu(self)
+    review_obj.map {|review|  puts "Beer: #{review.beer.name} , Rating: #{review.rating}, Review: #{review.description}"}
   end
 
   

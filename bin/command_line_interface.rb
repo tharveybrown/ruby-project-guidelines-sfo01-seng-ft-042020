@@ -51,9 +51,10 @@ class Menu
     
   end
   def self.main_menu(user)
+    # binding.pry
     # prompt = TTY::Prompt.new
     
-    choices = {'write a review' => 1, 'find a beer to drink' => 2, 'view reviews' => 3, 'exit' => 4}
+    choices = {'write a review' => 1, 'find a beer to drink' => 2, 'view my reviews' => 3, 'highest rated beers' => 4, 'sort beers' => 5, 'exit' => 6}
     
     selection = PROMPT.select("Choose your destiny?", choices)
     
@@ -73,28 +74,19 @@ class Menu
       
     when 3
       # todo: add my reviews
-      review_menu
+      user.my_reviews
       main_menu(user)
-      
     when 4
+      Beer.highest_rated
+      main_menu(user)
+    when 5
+      Beer.sort_beers_option
+      main_menu(user)
+    when 6
       self.exit_program
     end
   end
 
-  def self.review_menu
-    choices = {'top reviews' => 1, 'my reviews' => 2}
-    
-    selection = PROMPT.select("which reviews would you like to see?\n", choices)
-    case selection
-    when 1
-      top_five = Review.top_reviews(5)
-      Review.print_reviews(top_five)
-    when 2
-      reviews = user.reviews
-      print_reviews(reviews)
-      
-    end
-  end
 
   def self.exit_program
     hand = Emoji.find_by_alias("wave").raw
