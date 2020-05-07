@@ -13,8 +13,8 @@ module FindBeer
         print_suggestion(beer_pairings)
         ## todo leave a review for user and beer or return to main menu if no 
       when 2 
-        top_beers = Beer.highest_rated
-        print_beers(top_beers)
+        top_beers = Beer.highest_rated_by_avg
+        print_ratings(top_beers)
         #todo
       when 3 
         self.find_by_abv
@@ -37,6 +37,16 @@ module FindBeer
         puts ColorizedString[beer_name].colorize(:light_green)
         puts ColorizedString[beer_abv].colorize(:light_blue)
         puts ColorizedString[beer_description].colorize(:light_white)
+        puts "-----"
+      end
+    end
+
+    def print_ratings(beers)
+      beers.each do |k, v|
+        beer_name = "Beer: #{k}"
+        beer_rating = "Avg Rating: #{v.round(2)}"
+        puts ColorizedString[beer_name].colorize(:light_blue)
+        puts ColorizedString[beer_rating].colorize(:light_green)
         puts "-----"
       end
     end
