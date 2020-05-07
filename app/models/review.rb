@@ -14,7 +14,7 @@ class Review < ActiveRecord::Base
       print "Beer:".colorize(:light_blue).underline
       print " #{beer_name}\n".colorize(:light_blue) 
       print "Description:".colorize(:light_white).underline
-      print " #{beer_name}\n".colorize(:light_white) 
+      print " #{desc}\n".colorize(:light_white) 
       print "Rating:".colorize(:light_green).underline
       print " #{rating}".colorize(:light_green)
       puts "\n-----"
