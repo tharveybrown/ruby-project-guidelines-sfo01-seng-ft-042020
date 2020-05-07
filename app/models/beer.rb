@@ -13,7 +13,6 @@ class Beer < ActiveRecord::Base
   def get_rating_average
     list_of_reviews = self.reviews
     list_of_reviews.map{|review| review.rating}.sum/review_count
-    
   end
 
   #list of how many reviews a beer has
@@ -81,6 +80,13 @@ class Beer < ActiveRecord::Base
     else
       "No matching results"
     end
+  end
+
+
+  def self.highest_rated_by_avg
+    group = Review.group(:beer_id).average(:rating)
+    beer_to_avg = group.transform_keys {|k| self.find(k).name }
+    Hash[beer_to_avg.sort_by {|k,v| v}.reverse]
   end
   
   

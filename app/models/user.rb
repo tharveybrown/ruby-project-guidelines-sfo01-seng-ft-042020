@@ -2,6 +2,8 @@
 class User < ActiveRecord::Base
   has_many :reviews
   has_many :beers, through: :reviews
+  # validates :name, presence: true
+  validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }
   
 
 
