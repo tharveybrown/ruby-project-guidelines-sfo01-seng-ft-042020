@@ -142,3 +142,20 @@ class Menu
     end
   end
 end
+
+class Email < Quickstart
+
+  def self.get_gmail
+    puts "Enter your google email"
+    email = gets.chomp
+  end
+  
+  def self.authorize_gmail(email)
+    
+    
+    service = Google::Apis::GmailV1::GmailService.new
+    service.client_options.application_name = APPLICATION_NAME
+    # binding.pry
+    service.authorization = authorize
+  end
+end
