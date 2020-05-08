@@ -35,18 +35,21 @@ class Welcome
   end
 
   def sign_up(user_email)
+<<<<<<< HEAD
     binding.pry
     puts "Cheers! Whats your username?"
+=======
+    beers = Emoji.find_by_alias("beers").raw
+    puts "#{beers} #{beers}"
+    puts "Nice to meet you! To complete registration, enter your name:"
+>>>>>>> 554b6d393f55badd7385b8863baf5de19fc87d0a
     name = gets.chomp
     user = User.create({ name: name, email: user_email})
   end
 
   def welcome_message
-    # puts ColorizedString.color_samples  
-    beers = Emoji.find_by_alias("beers").raw
-    puts "#{beers} #{beers}"
-    puts FIGLET.new("cheers!").to_s  
-
+    puts FIGLET.new("cheers!").to_s
+    puts "\n"  
   end
 end
 
@@ -54,7 +57,6 @@ end
 class Menu
   extend FindBeer::ClassMethods
   extend ReviewBeer::ClassMethods
-  extend SortBeer::ClassMethods
   
   def self.progress_bar
     progressbar = ProgressBar.create(format: "\e[0;34m%t: |%B|\e[0m")
@@ -62,13 +64,15 @@ class Menu
   end
 
   def self.main_menu(user)
-    # binding.pry
-    # prompt = TTY::Prompt.new
-    
-    choices = {'write a review' => 1, 'find a beer to drink' => 2, 'view reviews' => 3, 'sort beers' => 4, 'exit' => 5}
-    
+  
+    choices = {
+      'write a review' => 1, 
+      'find a beer to drink' => 2, 
+      'view reviews' => 3, 
+      'sort beers' => 4, 
+      'exit' => 5
+    }
     selection = PROMPT.select("Choose your destiny?", choices)
-    
     case selection
     when 1
       beer_selection = self.select_beer
@@ -98,7 +102,6 @@ class Menu
       top_five = Review.top_reviews(5)
       Review.print_reviews(top_five)
     when 2
-      # binding.pry
       reviews = user.reviews
       if reviews.empty?
         puts "Looks like you haven't written any reviews yet!\n".colorize(:red)
@@ -112,5 +115,35 @@ class Menu
     hand = Emoji.find_by_alias("wave").raw
     puts "Bye for now! #{hand}"
     exit
+  end
+
+  def self.sort_menu
+    choices = {'by name' => 1, 'by abv' => 2}
+    selection = PROMPT.select("How would you like to sort?", choices)
+    
+    case selection
+    when 1
+      options = {'A - Z' => 1, 'Z - A' => 2}
+      selection1 = PROMPT.select("How would you like to sort?", options)
+      case selection1
+      when 1
+        beers = Beer.sort_beers_by_name_asc
+        self.print_beers(beers)
+      when 2
+        beers = Beer.sort_beers_by_name_desc
+        self.print_beers(beers)
+      end
+    when 2
+      options = {'lowest abv' => 1, 'highest abv' => 2}
+      selection2 = PROMPT.select("How would you like to sort?", options)
+      case selection2
+      when 1
+        beers = Beer.sort_beers_by_abv_asc(5)
+        self.print_beers(beers)
+      when 2
+        beers = Beer.sort_beers_by_abv_desc(5)
+        self.print_beers(beers)
+      end
+    end
   end
 end
