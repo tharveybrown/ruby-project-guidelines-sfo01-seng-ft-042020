@@ -1,3 +1,6 @@
+## Cheers 
+Cheers CLI app lets you interact with BrewDogs's [public api](https://punkapi.com/) to review and discover brews. 
+
 ### Installation
 Before getting started with the program, run the following commands:
 * `bundle install`

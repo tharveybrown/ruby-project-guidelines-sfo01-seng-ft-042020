@@ -16,7 +16,6 @@ PROMPT = TTY::Prompt.new
 FIGLET = RubyFiglet::Figlet
 require_relative '../bin/concerns/find_beer.rb'
 require_relative '../bin/concerns/review_beer.rb'
-
 require_all 'app'
 require 'colorize'
 require 'colorized_string'

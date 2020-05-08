@@ -1,7 +1,6 @@
 module FindBeer
   module ClassMethods
     def find_beer
-      
       choices = {'find by food pairing' => 1, 'find highest rated beers' => 2, 'find by abv' => 3}
       selection = PROMPT.select("How would you like to find a beer?", choices)
       self.progress_bar
