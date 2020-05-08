@@ -19,62 +19,18 @@ class Beer < ActiveRecord::Base
   
   def self.sort_beers_by_name_asc
     ordered_beers = self.order(:name)
-    ordered_beers.each_with_index do |beer,index|
-      i_plus_one = index +1
-      beer_name = "Beer: #{beer.name}"
-      abv = "Abv: #{beer.abv}"
-      description = "Description: #{beer.description}"
-      puts "#{i_plus_one}."
-      puts ColorizedString[beer_name].colorize(:light_blue) 
-      puts ColorizedString[abv].colorize(:light_yellow)
-      puts ColorizedString[description].colorize(:light_green) 
-      puts " ------ "
-    end
   end
   
   def self.sort_beers_by_name_desc
     ordered_beers = self.order(name: :desc)
-    ordered_beers.each_with_index do |beer,index|
-      i_plus_one = index +1
-      beer_name = "Beer: #{beer.name}"
-      abv = "Abv: #{beer.abv}"
-      description = "Description: #{beer.description}"
-      puts "#{i_plus_one}."
-      puts ColorizedString[beer_name].colorize(:light_blue) 
-      puts ColorizedString[abv].colorize(:light_yellow)
-      puts ColorizedString[description].colorize(:light_green) 
-      puts " ------ "
-    end
   end
 
-  def self.sort_beers_by_abv_asc
-    ordered_beers = self.order(:abv)
-    ordered_beers.each_with_index do |beer,index|
-      i_plus_one = index +1
-      beer_name = "Beer: #{beer.name}"
-      abv = "Abv: #{beer.abv}"
-      description = "Description: #{beer.description}"
-      puts "#{i_plus_one}."
-      puts ColorizedString[beer_name].colorize(:light_blue) 
-      puts ColorizedString[abv].colorize(:light_yellow)
-      puts ColorizedString[description].colorize(:light_green) 
-      puts " ------ "
-    end
+  def self.sort_beers_by_abv_asc(n)
+    ordered_beers = self.order(:abv).first(n)
   end
 
-  def self.sort_beers_by_abv_desc
-    ordered_beers = self.order(abv: :desc)
-    ordered_beers.each_with_index do |beer,index|
-      i_plus_one = index +1
-      beer_name = "Beer: #{beer.name}"
-      abv = "Abv: #{beer.abv}"
-      description = "Description: #{beer.description}"
-      puts "#{i_plus_one}."
-      puts ColorizedString[beer_name].colorize(:light_blue) 
-      puts ColorizedString[abv].colorize(:light_yellow)
-      puts ColorizedString[description].colorize(:light_green) 
-      puts " ------ "
-    end
+  def self.sort_beers_by_abv_desc(n)
+    ordered_beers = self.order(abv: :desc).first(n)
   end
 
 
@@ -104,6 +60,10 @@ class Beer < ActiveRecord::Base
     group = Review.group(:beer_id).average(:rating)
     beer_to_avg = group.transform_keys {|k| self.find(k) }
     Hash[beer_to_avg.sort_by {|k,v| -v}[0..4]]
+  end
+
+  def highest_review
+    self.reviews.order('rating desc').first
   end
   
   #returns random beer
