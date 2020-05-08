@@ -30,27 +30,32 @@ module FindBeer
     end
 
     def print_beers(beers)
+      i = 1
       beers.map do |beer|
         beer_name = "Beer: #{beer[:name]}"
         beer_abv = "ABV: #{beer[:abv]}"
         beer_tagline = "Tagline: #{beer[:tagline]}"
         beer_description = "Description: #{beer[:description]}"
+        puts "#{i}.".colorize(:cyan)
         puts beer_name.colorize(:light_green)
         puts beer_abv.colorize(:pink)
         puts beer_tagline.colorize(:light_blue)
         puts beer_description.colorize(:light_white)
         puts "-----"
+        i += 1
       end
     end
 
     def print_ratings(beers)
       beers.each_with_index do |(k, v), index|
         i_plus_one = index +1
-        beer_name = "Beer: #{k}"
+        beer_name = "Beer: #{k.name}"
         beer_rating = "Avg Rating: #{v.round(1)}"
+        top_review = "Top Review: #{k.highest_review.description}"
         puts "#{i_plus_one}."
-        puts ColorizedString[beer_name].colorize(:light_blue)
-        puts ColorizedString[beer_rating].colorize(:light_green)
+        puts beer_name.colorize(:light_blue)
+        puts beer_rating.colorize(:light_green)
+        puts top_review.colorize(:cyan)
         puts "-----"
       end
     end
@@ -66,6 +71,7 @@ module FindBeer
 
     def print_suggestion(beers)
       beer = beers.sample
+      puts "\n"
       print"We recommend you try: ".colorize(:light_magenta)
       print "#{beer.name}, abv #{beer.abv}".colorize(:light_magenta).on_light_white 
       puts "\n"
