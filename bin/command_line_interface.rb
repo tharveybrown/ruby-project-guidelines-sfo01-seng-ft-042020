@@ -35,7 +35,8 @@ class Welcome
   end
 
   def sign_up(user_email)
-    puts "Cheers! Whats your name?"
+    binding.pry
+    puts "Cheers! Whats your username?"
     name = gets.chomp
     user = User.create({ name: name, email: user_email})
   end

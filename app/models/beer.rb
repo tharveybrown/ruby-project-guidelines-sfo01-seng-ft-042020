@@ -6,7 +6,16 @@ class Beer < ActiveRecord::Base
 #all users who have reviewed the beer
   def user_reviews
     list_of_reviews = self.reviews
-    list_of_reviews.map{|review| "User: #{review.user.name}, Rating: #{review.rating}, Review: #{review.description}"}
+    list_of_reviews.each do |review|
+      user = review.user.name
+      rating = review.rating
+      description = review.description
+      created_at = review.created_at
+      puts "Created at: #{created_at}"
+      puts "User: #{user}"
+      puts "Rating: #{rating}"
+      puts "Description: #{description}"
+    end
   end
 
 

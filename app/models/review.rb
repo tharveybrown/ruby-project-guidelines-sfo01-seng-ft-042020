@@ -13,11 +13,11 @@ class Review < ActiveRecord::Base
       desc = review.description
       rating = review.rating.round(2)
       created_at = "Created at: #{review.created_at}".underline
-      puts ColorizedString[created_at].colorize(:light_white)
+      puts ColorizedString[created_at].colorize(:red)
       print "Beer:".colorize(:light_blue).underline
       print " #{beer_name}\n".colorize(:light_blue) 
-      print "Description:".colorize(:light_white).underline
-      print " #{desc}\n".colorize(:light_white) 
+      print "Description:".colorize(:red).underline
+      print " #{desc}\n".colorize(:red) 
       print "Rating:".colorize(:light_green).underline
       print " #{rating}".colorize(:light_green)
       puts "\n-----"
