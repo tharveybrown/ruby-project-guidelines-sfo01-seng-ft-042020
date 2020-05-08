@@ -59,7 +59,6 @@ class Menu
   end
 
   def self.main_menu(user)
-  
     choices = {
       'write a review' => 1, 
       'find a beer to drink' => 2, 

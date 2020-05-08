@@ -5,11 +5,8 @@ User.destroy_all
 FoodPairing.destroy_all
 Review.destroy_all
 
-
-
 #Beer Table
 beers = PunkBeer.get_data
-
 beers.each do |beer|
   beer = Beer.new(beer)
   beer.save
@@ -41,10 +38,8 @@ end
   })
 end
 
-
-
 #Review Table.. 
-#use "hipster sentences" from faker to generate descriotions
+#use "hipster sentences" to generate descriptions
 
 20.times do 
   Review.create({user_id: User.all.sample.id, 
